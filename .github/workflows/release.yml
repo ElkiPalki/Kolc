@@ -19,8 +19,8 @@ jobs:
         with:
           submodules: true
       - run: sudo apt install -y gcc-12 g++-12
-      - run: sudo update-alternatives --install /usr/bin/g++ g++ /usr/local/gcc-12.0.0/bin/g++12.0.0 12
-      - run: sudo update-alternatives --install /usr/bin/gcc gcc /usr/local/gcc-12.0.0/bin/gcc12.0.0 12
+      - run: sudo update-alternatives --install /usr/bin/g++ g++ /usr/local/gcc-12.5.0/bin/g++12.5.0 12
+      - run: sudo update-alternatives --install /usr/bin/gcc gcc /usr/local/gcc-12.5.0/bin/gcc12.5.0 12
       - run: sudo apt-get update && sudo apt-get install libboost-test-dev -y
       - run: cmake . -DPATCH_VERSION=${{ github.run_number }}
       - run: cmake --build .
