@@ -10,13 +10,17 @@ permissions:
   pull-requests: read
   contents: write
 
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           submodules: true
+      - run: sudo apt install gcc-12.2 g++-12.2
+      - run: sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12.2 100 --slave /usr/bin/g++ g++ /usr/bin/g++-12.2 --slave /usr/bin/gcov gcov /usr/bin/gcov-12.2
+      - run: sudo update-alternatives --set gcc /usr/bin/gcc-12.2
       - run: sudo apt-get update && sudo apt-get install libboost-test-dev -y
       - run: cmake . -DPATCH_VERSION=${{ github.run_number }}
       - run: cmake --build .
