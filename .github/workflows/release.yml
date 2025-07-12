@@ -18,9 +18,18 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - run: sudo apt install -y gcc-12 g++-12
-      - run: sudo update-alternatives --install /usr/bin/g++ g++ /usr/local/gcc-12.5.0/bin/g++12.5.0 12
-      - run: sudo update-alternatives --install /usr/bin/gcc gcc /usr/local/gcc-12.5.0/bin/gcc12.5.0 12
+        # Install gcc-12 if not already available (depends on runner)
+      - name: Install gcc-12
+        run: |
+          sudo apt-get update
+          sudo apt-get install gcc-12 g++-12
+
+        # Set environment variables for gcc 12
+      - name: Set compiler environment variables
+        run: |
+          echo "CC=gcc-12" >> $GITHUB_ENV
+          echo "CXX=g++-12" >> $GITHUB_ENV
+
       - run: sudo apt-get update && sudo apt-get install libboost-test-dev -y
       - run: cmake . -DPATCH_VERSION=${{ github.run_number }}
       - run: cmake --build .
