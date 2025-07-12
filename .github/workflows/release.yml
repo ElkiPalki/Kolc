@@ -6,6 +6,9 @@ on:
       - main
       - feature/github_actions
 
+permissions:
+  pull-requests: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
